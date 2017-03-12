@@ -1,0 +1,12 @@
+language: objective-c
+xcode_project: GroupSortData.xcodeproj
+xcode_scheme: GroupSortData
+osx_image: xcode8.2
+xcode_sdk: iphonesimulator
+
+before_script:
+  - SIMULATOR_UUID=`xcrun simctl create "iPhone 7" "iPhone 7" 10.2`
+script:
+  - xcodebuild build-for-testing test-without-building -scheme GroupSortData -configuration Debug -sdk iphonesimulator -destination "id=$SIMULATOR_UUID" ENABLE_TESTABILITY=YES | xcpretty
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
